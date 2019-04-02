@@ -1,6 +1,8 @@
 import {createStackNavigator, createAppContainer} from "react-navigation"
 import Home from "../Components/Home"
 import Menu from "../Components/Menu"
+import translate from "../utils/language.utils"
+
 
 const stackie = createStackNavigator({
     Home: {
@@ -12,7 +14,7 @@ const stackie = createStackNavigator({
     Menu: {
         screen: Menu,
         navigationOptions: {
-            title: "Menu",
+            title: translate("NAVIGATION_menu"),
             headerStyle: {
                 backgroundColor: "#FF0000"
             },

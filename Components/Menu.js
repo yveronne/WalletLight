@@ -1,6 +1,8 @@
 import React from "react"
-import {View, StyleSheet, TouchableOpacity, Image, Text} from "react-native"
+import {View, StyleSheet} from "react-native"
 import MenuItem from "./MenuItem"
+import translate from "../utils/language.utils"
+
 
 class Menu extends React.Component {
     render() {
@@ -8,13 +10,13 @@ class Menu extends React.Component {
             <View style={styles.main_container}>
                 <MenuItem styles={styles.item}
                           image={require("../Images/ic_localisation.png")}
-                          text="Points Marchands Ouverts"/>
+                          text={translate("MENU_openStores")}/>
                 <MenuItem styles={styles.item}
                           image={require("../Images/ic_cash.png")}
-                          text="Frais des opérations"/>
+                          text={translate("MENU_prices")}/>
                 <MenuItem styles={styles.item}
                           image={require("../Images/ic_help.png")}
-                          text="Aide"/>
+                          text={translate("MENU_help")}/>
             </View>
         )
     }
