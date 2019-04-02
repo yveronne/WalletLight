@@ -2,6 +2,12 @@ import React from "react"
 import {View, StyleSheet, Image, Text, TouchableOpacity, Dimensions} from "react-native"
 
 class Home extends React.Component {
+
+    _showMenu(){
+        this.props.navigation.navigate("Menu")
+    }
+
+
     render() {
         return (
             <View style={styles.main_container}>
@@ -12,7 +18,7 @@ class Home extends React.Component {
                     <Text style={styles.home_text}>Bienvenue sur Afriland Wallet Light</Text>
                 </View>
                 <View style={styles.button_container}>
-                    <TouchableOpacity onPress={() => {}}
+                    <TouchableOpacity onPress={() => {this._showMenu()}}
                                       style={styles.button}>
                         <Text style={styles.button_text}>Commencer</Text>
                     </TouchableOpacity>
