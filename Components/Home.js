@@ -1,7 +1,8 @@
 import React from "react"
-import {View, StyleSheet, Image, Text, TouchableOpacity, Dimensions} from "react-native"
+import {View, Image, Text, TouchableOpacity} from "react-native"
 import translate from "../utils/language.utils"
 import {setLocale , getCurrentLocale} from "../utils/language.utils"
+import EStyleSheet from "react-native-extended-stylesheet"
 
 class Home extends React.Component {
 
@@ -36,7 +37,6 @@ class Home extends React.Component {
         }
     }
 
-
     render() {
         return (
             <View style={styles.main_container}>
@@ -63,9 +63,7 @@ class Home extends React.Component {
     }
 }
 
-const width = Dimensions.get("window").width;
-
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
     main_container: {
         flex: 1,
         flexDirection: "column",
@@ -76,14 +74,14 @@ const styles = StyleSheet.create({
     logo:{
         flex: 1,
         height: undefined,
-        width: width,
+        width: "$width",
     },
     welcome_text_container:{
         flex: 1,
         justifyContent: "center",
     },
     home_text:{
-        fontSize: 35,
+        fontSize: "4.3rem",
         textAlign: "center"
     },
     button_container: {
@@ -94,20 +92,19 @@ const styles = StyleSheet.create({
         backgroundColor: "#FF0000",
         borderRadius: 10,
         height: 50,
-        width: width/1.5,
+        width: "$width/1.5",
         justifyContent: "center"
     },
     button_text: {
         textAlign: "center",
         color: "#FFFFFF",
-        fontSize: 18
+        fontSize: "2.3rem"
     },
     language:{
         flex: 1,
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        // backgroundColor: "yellow"
     },
     language_touchable: {
         alignItems: "center"

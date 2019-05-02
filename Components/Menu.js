@@ -10,13 +10,17 @@ class Menu extends React.Component {
             <View style={styles.main_container}>
                 <MenuItem styles={styles.item}
                           image={require("../Images/ic_localisation.png")}
-                          text={translate("MENU_openStores")}/>
+                          text={translate("MENU_openStores")}
+                          type={"stores"}
+                          navigation={this.props.navigation}/>
                 <MenuItem styles={styles.item}
                           image={require("../Images/ic_cash.png")}
-                          text={translate("MENU_prices")}/>
+                          text={translate("MENU_prices")}
+                          type={"prices"}/>
                 <MenuItem styles={styles.item}
                           image={require("../Images/ic_help.png")}
-                          text={translate("MENU_help")}/>
+                          text={translate("MENU_help")}
+                          type={"help"}/>
             </View>
         )
     }
