@@ -3,6 +3,7 @@ import {View, ActivityIndicator, StyleSheet, FlatList} from "react-native"
 import {SearchBar, ListItem} from "react-native-elements"
 import translate from "../utils/language.utils"
 import {getStoresOfTown} from "../API/WalletAPI"
+import {MenuProvider, Menu, MenuOptions, MenuOption, MenuTrigger} from "react-native-popup-menu"
 
 class StoresList extends React.Component {
 
@@ -15,14 +16,12 @@ class StoresList extends React.Component {
         this.array = []
     }
 
-    _displayLoading(){
-        if(this.state.isLoading){
-            return (
-                <View style={styles.loadingContainer}>
-                    <ActivityIndicator size="large"/>
-                </View>
-            )
-        }
+    _showAddCommentPage(storeID){
+        this.props.navigation.navigate("Comment", {storeId: storeID })
+    }
+
+    _showWaitingListInsertionPage(storeID){
+        this.props.navigation.navigate("WaitingList", {storeId: storeID })
     }
 
     componentDidMount(){
@@ -38,6 +37,22 @@ class StoresList extends React.Component {
                 this.setState({isLoading: false})
             })
     }
+
+    openMenu = () => {
+        this.menu.open();
+    };
+
+    _displayLoading(){
+        if(this.state.isLoading){
+            return (
+                <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="large"/>
+                </View>
+            )
+        }
+    }
+
+
 
 
     _searchFilterFunction (text) {
@@ -77,25 +92,36 @@ class StoresList extends React.Component {
 
     render() {
         return (
-            <View style={styles.main_container}>
-                {this._displayLoading()}
-                <FlatList
-                    data={this.state.stores}
-                    renderItem={ ({item}) =>
-                        <ListItem
-                            key={item.id.toString()}
-                            title={item.name.toUpperCase()}
-                            subtitle={item.district.name + " , " + item.area}
-                            onPress={() => {console.log("Storie")}}
-                            bottomDivider={true}
-                            badge={{ value: item.waitingListSize, textStyle: { color: 'orange' } }}
-                        />
-                    }
-                    keyExtractor={item => item.id.toString()}
-                    // ItemSeparatorComponent={this._renderSeparator}
-                    ListHeaderComponent={this._renderHeader}
-                />
-            </View>
+                <View style={styles.main_container}>
+                    {this._displayLoading()}
+                    <FlatList
+                        data={this.state.stores}
+                        renderItem={ ({item}) =>
+                            <ListItem
+                                key={item.id.toString()}
+                                title={item.name.toUpperCase()}
+                                subtitle={item.district.name + " , " + item.area}
+                                onLongPress={() => {this.setState({selectedStoreId: item.id});
+                                                    this.openMenu()}}
+                                badge={{ value: item.waitingListSize, textStyle: { color: 'orange' } }}
+                            />
+
+                        }
+                        keyExtractor={item => item.id.toString()}
+                        ItemSeparatorComponent={this._renderSeparator}
+                        ListHeaderComponent={this._renderHeader}
+                    />
+                    <Menu ref={c => (this.menu = c)}>
+                        <MenuTrigger text=""/>
+                        <MenuOptions>
+                            <MenuOption onSelect={() => this._showWaitingListInsertionPage(this.state.selectedStoreId) } text="M'insérer dans la liste d'attente" />
+                            <MenuOption onSelect={() => alert("Initiation de transaction")} text="Initier une opération" />
+                            <MenuOption onSelect={() => this._showAddCommentPage(this.state.selectedStoreId) } text="Envoyer mes commentaires" />
+                        </MenuOptions>
+                    </Menu>
+                </View>
+
+
         )
     }
 }
@@ -121,3 +147,4 @@ const styles = StyleSheet.create({
 });
 
 export default StoresList
+
