@@ -114,9 +114,9 @@ class StoresList extends React.Component {
                     <Menu ref={c => (this.menu = c)}>
                         <MenuTrigger text=""/>
                         <MenuOptions>
-                            <MenuOption onSelect={() => this._showWaitingListInsertionPage(this.state.selectedStoreId) } text="M'insérer dans la liste d'attente" />
-                            <MenuOption onSelect={() => alert("Initiation de transaction")} text="Initier une opération" />
-                            <MenuOption onSelect={() => this._showAddCommentPage(this.state.selectedStoreId) } text="Envoyer mes commentaires" />
+                            <MenuOption onSelect={() => this._showWaitingListInsertionPage(this.state.selectedStoreId) } text={translate("NAVIGATION_waitinglist")} />
+                            <MenuOption onSelect={() => alert("Initiation de transaction")} text={translate("NAVIGATION_transaction")} />
+                            <MenuOption onSelect={() => this._showAddCommentPage(this.state.selectedStoreId) } text={translate("NAVIGATION_comment")} />
                         </MenuOptions>
                     </Menu>
                 </View>

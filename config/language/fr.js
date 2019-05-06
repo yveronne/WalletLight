@@ -8,6 +8,19 @@ export default {
     NAVIGATION_menu : "Menu",
     NAVIGATION_points : "Points marchands ouverts",
     NAVIGATION_stores : "Points marchands ouverts",
+    NAVIGATION_comment : "Envoyer mes commentaires",
+    NAVIGATION_waitinglist : "M'insérer dans la file d'attente",
+    NAVIGATION_transaction : "Initier une opération",
     TOWNLIST_search: "Rechercher une ville...",
-    STORESLIST_search: "Rechercher un quartier..."
+    STORESLIST_search: "Rechercher un quartier...",
+    envoyer : "Envoyer",
+    valider : "Valider",
+    FORM_phone: "Mon numéro de téléphone",
+    FORM_secret: "Mon code secret",
+    FORM_comment_title: "Titre du commentaire",
+    FORM_comment_content: "Contenu",
+    PLACEHOLDER_phone: "Numéro de téléphone",
+    PLACEHOLDER_secret: "Saisir votre code secret...",
+    PLACEHOLDER_comment_title: "Titre du commentaire",
+    PLACEHOLDER_comment_content: "Saisir les commentaires..."
 }

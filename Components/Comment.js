@@ -46,19 +46,30 @@ class Comment extends React.Component {
     render() {
         return (
             <View style={styles.main_container}>
-                <Text>Mon numéro de téléphone</Text>
-                <TextInput placeholder="Numéro de téléphone"
-                            onChangeText={(text) => this._customerNumberInputChanged(text)}/>
-                <Text>Titre du commentaire</Text>
-                <TextInput placeholder="Titre du commentaire"
-                            onChangeText={(text) => this._commentTitleInputChanged(text)}/>
-                <Text>Contenu</Text>
-                <TextInput placeholder="Saisir les commentaires..."
-                            onChangeText={(text) =>this._commentContentInputChanged(text)}/>
+                <View style={styles.phone_container}>
+                    <Text style={styles.text}>{translate("FORM_phone")}</Text>
+                    <TextInput placeholder={translate("PLACEHOLDER_phone")}
+                               onChangeText={(text) => this._customerNumberInputChanged(text)}
+                               autoFocus={true}
+                                style={styles.input}/>
+                </View>
+                <View style={styles.phone_container}>
+                    <Text style={styles.text}>{translate("FORM_comment_title")}</Text>
+                    <TextInput placeholder={translate("PLACEHOLDER_comment_title")}
+                               onChangeText={(text) => this._commentTitleInputChanged(text)}
+                               style={styles.input}/>
+                </View>
+                <View style={styles.content_container}>
+                    <Text style={styles.text}>{translate("FORM_comment_content")}</Text>
+                    <TextInput placeholder={translate("PLACEHOLDER_comment_content")}
+                               onChangeText={(text) =>this._commentContentInputChanged(text)}
+                               multiline={true} numberOfLines={15}
+                               style={styles.input}/>
+                </View>
                 <View style={styles.button_container}>
                     <TouchableOpacity onPress={() => {this.submitComment(this.customerNumber, this.commentTitle, this.commentContent)}}
                                       style={styles.button}>
-                        <Text style={styles.button_text}> Envoyer </Text>
+                        <Text style={styles.button_text}>{translate("envoyer")} </Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -69,11 +80,42 @@ class Comment extends React.Component {
 const styles = EStyleSheet.create({
     main_container: {
         flex: 1,
-        backgroundColor: "#ededed"
+        backgroundColor: "#ededed",
+        flexDirection: "column",
+        padding : "$heightie"
+    },
+    phone_container: {
+        flex: 2,
+        marginBottom: "$heightie",
+        paddingTop: "$heightie",
+        paddingBottom: "$heightie"
+    },
+    content_container: {
+        flex: 4,
+        marginBottom: "$heightie*2",
+        paddingTop: "$heightie",
+        paddingBottom: "$heightie"
     },
     button_container: {
         flex: 1,
-        justifyContent: "center"
+        justifyContent: "center",
+        textAlign: "center",
+        flexDirection: "row",
+        paddingBottom: "$heightie"
+    },
+    text: {
+        fontSize: "2.2rem",
+        color: "#000000",
+        fontWeight: "bold",
+        paddingBottom: "$heightie"
+    },
+    input: {
+        borderRadius: 5,
+        borderColor: "#000000",
+        borderStyle: "solid",
+        borderWidth: 0.5,
+        paddingLeft: "$heightie/2",
+        flex: 1
     },
     button: {
         backgroundColor: "#FF0000",

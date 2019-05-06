@@ -2,6 +2,7 @@ import React from "react"
 import {View, TextInput, Text, TouchableOpacity} from "react-native"
 import {insertIntoWaitingList} from "../API/WalletAPI"
 import EStyleSheet from "react-native-extended-stylesheet"
+import translate from "../utils/language.utils";
 
 
 class WaitingListInsertion extends React.Component {
@@ -30,16 +31,21 @@ class WaitingListInsertion extends React.Component {
     render() {
         return (
             <View style={styles.main_container}>
-                <Text>Mon numéro de téléphone</Text>
-                <TextInput placeholder="Numéro de téléphone"
-                           onChangeText={(text) => this._customerNumberInputChanged(text)}/>
-                <Text>Mon code secret</Text>
-                <TextInput placeholder="Saisir votre code secret..."
-                           onChangeText={(text) => this._secretInputChanged(text)}/>
+                <View style={styles.input_container}>
+                    <Text style={styles.text}>{translate("FORM_phone")}</Text>
+                    <TextInput style={styles.input} placeholder={translate("PLACEHOLDER_phone")}
+                               onChangeText={(text) => this._customerNumberInputChanged(text)}/>
+                </View>
+                <View style={styles.input_container}>
+                    <Text style={styles.text}>{translate("FORM_secret")}</Text>
+                    <TextInput style={styles.input} placeholder={translate("PLACEHOLDER_secret")}
+                               onChangeText={(text) => this._secretInputChanged(text)}
+                               secureTextEntry={true}/>
+                </View>
                 <View style={styles.button_container}>
                     <TouchableOpacity onPress={() => {this.insert(this.customerNumber, this.secret, this.props.navigation.getParam("storeId"))}}
                                       style={styles.button}>
-                        <Text style={styles.button_text}> Valider </Text>
+                        <Text style={styles.button_text}>{translate("valider")}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -50,11 +56,36 @@ class WaitingListInsertion extends React.Component {
 const styles = EStyleSheet.create({
     main_container: {
         flex: 1,
-        backgroundColor: "#ededed"
+        backgroundColor: "#ededed",
+        flexDirection: "column",
+        padding : "$heightie"
+    },
+    input_container: {
+        flex: 2,
+        marginBottom: "$heightie*3",
+        paddingTop: "$heightie*2",
+        paddingBottom: "$heightie*2"
+    },
+    text: {
+        fontSize: "2.2rem",
+        color: "#000000",
+        fontWeight: "bold",
+        paddingBottom: "$heightie*2"
+    },
+    input: {
+        borderRadius: 5,
+        borderColor: "#000000",
+        borderStyle: "solid",
+        borderWidth: 0.5,
+        paddingLeft: "$heightie",
+        flex: 1
     },
     button_container: {
         flex: 1,
-        justifyContent: "center"
+        justifyContent: "center",
+        textAlign: "center",
+        flexDirection: "row",
+        paddingBottom: "$heightie"
     },
     button: {
         backgroundColor: "#FF0000",

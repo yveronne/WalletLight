@@ -9,6 +9,7 @@ const height = Dimensions.get("window").height;
 
 EStyleSheet.build({
     $rem : width/40,
+    $heightie : height/40,
     $height: height,
     $width: width
 });
