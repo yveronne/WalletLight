@@ -31,7 +31,14 @@ export function addComment(comment){
 
         })
     })
-        .then((response) => response.json())
+        .then((response) => {
+            if(response.status === 404){
+                return ({"isOk" : false, "error" : response._bodyText})
+            }
+            else if(response.status === 201){
+                return ({"isOk" : true})
+            }
+        })
         .catch((error) => console.log("Une erreur est survenue lors de la collecte" + error))
 }
 
@@ -48,6 +55,13 @@ export function insertIntoWaitingList(storeId, customerNumber, secret){
             "secret" : secret
         })
     })
-        .then((response) => response.json())
+        .then((response) => {
+            if(response.status === 404){
+                return ({"isOk" : false, "error" : response._bodyText})
+            }
+            else if(response.status === 201){
+                return ({"isOk" : true})
+            }
+        })
         .catch((error) => console.log("Une erreur est survenue lors de la collecte " +error))
 }

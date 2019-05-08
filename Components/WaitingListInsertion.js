@@ -1,8 +1,10 @@
 import React from "react"
-import {View, TextInput, Text, TouchableOpacity} from "react-native"
+import {View, TextInput, Text, TouchableOpacity, Alert} from "react-native"
 import {insertIntoWaitingList} from "../API/WalletAPI"
 import EStyleSheet from "react-native-extended-stylesheet"
 import translate from "../utils/language.utils";
+import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view"
+
 
 
 class WaitingListInsertion extends React.Component {
@@ -22,15 +24,31 @@ class WaitingListInsertion extends React.Component {
         this.secret = text
     }
 
+
     insert(number, secret, storeId){
+        const {goBack} = this.props.navigation;
         insertIntoWaitingList(storeId, number, secret)
-            .then((response) => alert("Vous avez bien été inséré dans la file d'attente" + response))
+            .then((data) => {
+                if(!data.isOk){
+                    Alert.alert("Erreur", data.error,
+                        [
+                            {text: "Retour", style : "cancel"}
+                        ]);
+                }
+                else {
+                    Alert.alert("Succès", "Vous avez bien été inséré dans la file d'attente.",
+                        [
+                            {text: "OK", onPress: () => goBack()}
+                        ]);
+                }
+            })
             .catch((error) => console.log(error))
     }
 
     render() {
         return (
-            <View style={styles.main_container}>
+            <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }}
+                                     contentContainerStyle={styles.main_container}>
                 <View style={styles.input_container}>
                     <Text style={styles.text}>{translate("FORM_phone")}</Text>
                     <TextInput style={styles.input} placeholder={translate("PLACEHOLDER_phone")}
@@ -48,7 +66,7 @@ class WaitingListInsertion extends React.Component {
                         <Text style={styles.button_text}>{translate("valider")}</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </KeyboardAwareScrollView>
         )
     }
 }

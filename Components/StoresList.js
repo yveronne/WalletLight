@@ -3,7 +3,7 @@ import {View, ActivityIndicator, StyleSheet, FlatList} from "react-native"
 import {SearchBar, ListItem} from "react-native-elements"
 import translate from "../utils/language.utils"
 import {getStoresOfTown} from "../API/WalletAPI"
-import {MenuProvider, Menu, MenuOptions, MenuOption, MenuTrigger} from "react-native-popup-menu"
+import {Menu, MenuOptions, MenuOption, MenuTrigger} from "react-native-popup-menu"
 
 class StoresList extends React.Component {
 
@@ -51,8 +51,6 @@ class StoresList extends React.Component {
             )
         }
     }
-
-
 
 
     _searchFilterFunction (text) {

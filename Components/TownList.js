@@ -4,7 +4,6 @@ import {getTowns} from "../API/WalletAPI"
 import {SearchBar, ListItem} from "react-native-elements"
 import translate from "../utils/language.utils"
 
-
 class TownList extends React.Component {
 
     constructor(props){

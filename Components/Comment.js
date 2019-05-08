@@ -1,8 +1,9 @@
 import React from "react"
-import {View, Text, TextInput, StyleSheet, TouchableOpacity} from "react-native"
+import {View, Text, TextInput, TouchableOpacity, Alert} from "react-native"
 import translate from "../utils/language.utils";
 import {addComment} from "../API/WalletAPI"
 import EStyleSheet from "react-native-extended-stylesheet"
+import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view"
 
 
 class Comment extends React.Component {
@@ -34,18 +35,29 @@ class Comment extends React.Component {
             "customerNumber" : number,
             "storeId" : this.props.navigation.getParam("storeId")
         };
+        const {goBack} = this.props.navigation;
         addComment(comment)
             .then(data => {
-                alert("Votre commentaire a bien été envoyé. Merci." + data);
-                console.log("Votre commentaire a bien été envoyé. Merci. " + data);
-
+                if(!data.isOk){
+                    Alert.alert("Erreur", data.error,
+                        [
+                            {text: "Retour", style : "cancel"}
+                        ]);
+                }
+                else {
+                    Alert.alert("Succès", "Votre commentaire a bien été envoyé. Merci.",
+                        [
+                            {text: "OK", onPress: () => goBack()}
+                        ]);
+                }
             })
             .catch(error => console.log(error))
     }
 
     render() {
         return (
-            <View style={styles.main_container}>
+            <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }}
+                                     contentContainerStyle={styles.main_container}>
                 <View style={styles.phone_container}>
                     <Text style={styles.text}>{translate("FORM_phone")}</Text>
                     <TextInput placeholder={translate("PLACEHOLDER_phone")}
@@ -72,7 +84,7 @@ class Comment extends React.Component {
                         <Text style={styles.button_text}>{translate("envoyer")} </Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </KeyboardAwareScrollView>
         )
     }
 }
