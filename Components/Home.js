@@ -86,14 +86,16 @@ const styles = EStyleSheet.create({
     },
     button_container: {
         flex: 1,
-        justifyContent: "center"
+        justifyContent: "center",
+        textAlign: "center"
     },
     button: {
         backgroundColor: "#FF0000",
         borderRadius: 10,
-        height: 50,
+        height: "$height/10",
         width: "$width/1.5",
-        justifyContent: "center"
+        justifyContent: "center",
+        textAlign: "center"
     },
     button_text: {
         textAlign: "center",

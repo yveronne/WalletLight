@@ -1,4 +1,4 @@
-const URL = "http://192.168.43.17:8000/";
+const URL = "http://192.168.99.37:8000/";
 
 export function getTowns(){
     const url = URL+"towns";
@@ -31,14 +31,7 @@ export function addComment(comment){
 
         })
     })
-        .then((response) => {
-            if(response.status === 404){
-                return ({"isOk" : false, "error" : response._bodyText})
-            }
-            else if(response.status === 201){
-                return ({"isOk" : true})
-            }
-        })
+        .then((response) => response.json())
         .catch((error) => console.log("Une erreur est survenue lors de la collecte" + error))
 }
 
@@ -55,13 +48,30 @@ export function insertIntoWaitingList(storeId, customerNumber, secret){
             "secret" : secret
         })
     })
-        .then((response) => {
-            if(response.status === 404){
-                return ({"isOk" : false, "error" : response._bodyText})
-            }
-            else if(response.status === 201){
-                return ({"isOk" : true})
-            }
-        })
+        .then((response) => response.json())
         .catch((error) => console.log("Une erreur est survenue lors de la collecte " +error))
+}
+
+
+export function initiateOperation(operation){
+    const url = URL+"transactions";
+
+    return fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type" : "application/json"
+        },
+        body: JSON.stringify({
+            "type" : operation.type,
+            "amount" : operation.amount,
+            "merchantPointID" : operation.merchantPointID,
+            "expectedvalidationdate" : operation.expectedValidationDate,
+            "customerNumber" : operation.customerNumber,
+            "beneficiaryNumber" : operation.beneficiaryNumber,
+            "secret" : operation.secret
+
+        })
+    })
+        .then(response => response.json())
+        .catch(error => console.log("Une erreur est survenue lors de la collecte " +error))
 }

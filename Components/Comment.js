@@ -37,17 +37,17 @@ class Comment extends React.Component {
         };
         const {goBack} = this.props.navigation;
         addComment(comment)
-            .then(data => {
-                if(!data.isOk){
-                    Alert.alert("Erreur", data.error,
-                        [
-                            {text: "Retour", style : "cancel"}
-                        ]);
-                }
-                else {
+            .then(response => {
+                if(response.message != null){
                     Alert.alert("Succès", "Votre commentaire a bien été envoyé. Merci.",
                         [
                             {text: "OK", onPress: () => goBack()}
+                        ]);
+                }
+                else if (response.error != null){
+                    Alert.alert("Echec", response.error,
+                        [
+                            {text: "Retour", style : "cancel"}
                         ]);
                 }
             })
@@ -63,7 +63,8 @@ class Comment extends React.Component {
                     <TextInput placeholder={translate("PLACEHOLDER_phone")}
                                onChangeText={(text) => this._customerNumberInputChanged(text)}
                                autoFocus={true}
-                                style={styles.input}/>
+                                style={styles.input}
+                               keyboardType="numeric"/>
                 </View>
                 <View style={styles.phone_container}>
                     <Text style={styles.text}>{translate("FORM_comment_title")}</Text>

@@ -5,6 +5,7 @@ import TownList from "../Components/TownList"
 import StoresList from "../Components/StoresList"
 import WaitingListInsertion from "../Components/WaitingListInsertion"
 import Comment from "../Components/Comment"
+import OperationInitiation from "../Components/OperationInitiation"
 import translate from "../utils/language.utils"
 
 
@@ -84,6 +85,20 @@ const stackie = createStackNavigator({
                 fontWeight: "bold",
                 color: "#FFFFFF",
             },
+        }
+    },
+    OperationInitiation: {
+        screen: OperationInitiation,
+        navigationOptions: {
+            title: "Initiation de l'opération",
+            headerStyle: {
+                backgroundColor: "#FF0000"
+            },
+            headerTintColor: "#FFFFFF",
+            headerTitleStyle: {
+                fontWeight: "bold",
+                color: "#FFFFFF"
+            }
         }
     }
 

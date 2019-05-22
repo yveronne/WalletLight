@@ -1,9 +1,11 @@
 import React from "react"
-import {View, ActivityIndicator, StyleSheet, FlatList} from "react-native"
+import {View, ActivityIndicator, FlatList} from "react-native"
 import {SearchBar, ListItem} from "react-native-elements"
 import translate from "../utils/language.utils"
 import {getStoresOfTown} from "../API/WalletAPI"
 import {Menu, MenuOptions, MenuOption, MenuTrigger} from "react-native-popup-menu"
+import EStyleSheet from "react-native-extended-stylesheet"
+
 
 class StoresList extends React.Component {
 
@@ -13,7 +15,8 @@ class StoresList extends React.Component {
             isLoading: false,
             stores: []
         };
-        this.array = []
+        this.array = [];
+        this.selectedStoreId = null
     }
 
     _showAddCommentPage(storeID){
@@ -22,6 +25,10 @@ class StoresList extends React.Component {
 
     _showWaitingListInsertionPage(storeID){
         this.props.navigation.navigate("WaitingList", {storeId: storeID })
+    }
+
+    _showOperationInitiationPage(storeID){
+        this.props.navigation.navigate("OperationInitiation", {storeId: storeID})
     }
 
     componentDidMount(){
@@ -51,7 +58,6 @@ class StoresList extends React.Component {
             )
         }
     }
-
 
     _searchFilterFunction (text) {
         this.setState({
@@ -99,9 +105,9 @@ class StoresList extends React.Component {
                                 key={item.id.toString()}
                                 title={item.name.toUpperCase()}
                                 subtitle={item.district.name + " , " + item.area}
-                                onLongPress={() => {this.setState({selectedStoreId: item.id});
+                                onLongPress={() => {this.selectedStoreId = item.id;
                                                     this.openMenu()}}
-                                badge={{ value: item.waitingListSize, textStyle: { color: 'orange' } }}
+                                badge={{ value: item.waitingListSize, textStyle: styles.badgeText, badgeStyle: styles.badge }}
                             />
 
                         }
@@ -112,9 +118,9 @@ class StoresList extends React.Component {
                     <Menu ref={c => (this.menu = c)}>
                         <MenuTrigger text=""/>
                         <MenuOptions>
-                            <MenuOption onSelect={() => this._showWaitingListInsertionPage(this.state.selectedStoreId) } text={translate("NAVIGATION_waitinglist")} />
-                            <MenuOption onSelect={() => alert("Initiation de transaction")} text={translate("NAVIGATION_transaction")} />
-                            <MenuOption onSelect={() => this._showAddCommentPage(this.state.selectedStoreId) } text={translate("NAVIGATION_comment")} />
+                            <MenuOption onSelect={() => this._showWaitingListInsertionPage(this.selectedStoreId) } text={translate("NAVIGATION_waitinglist")} />
+                            <MenuOption onSelect={() => this._showOperationInitiationPage(this.selectedStoreId)} text="Initier une opération" />
+                            <MenuOption onSelect={() => this._showAddCommentPage(this.selectedStoreId) } text={translate("NAVIGATION_comment")} />
                         </MenuOptions>
                     </Menu>
                 </View>
@@ -124,7 +130,7 @@ class StoresList extends React.Component {
     }
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
     loadingContainer : {
         position: "absolute",
         left: 0,
@@ -141,6 +147,18 @@ const styles = StyleSheet.create({
     main_container: {
         flex: 1,
         backgroundColor: "#ededed"
+    },
+    badgeText: {
+        color: "#000000",
+        fontSize: "2rem",
+        fontWeight: "bold"
+    },
+    badge: {
+        backgroundColor: "#FF0000",
+        alignContent: "center",
+        height: "$heightie*3",
+        width: "$heightie*3",
+        borderRadius: "$heightie*3"
     }
 });
 

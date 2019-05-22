@@ -28,17 +28,17 @@ class WaitingListInsertion extends React.Component {
     insert(number, secret, storeId){
         const {goBack} = this.props.navigation;
         insertIntoWaitingList(storeId, number, secret)
-            .then((data) => {
-                if(!data.isOk){
-                    Alert.alert("Erreur", data.error,
-                        [
-                            {text: "Retour", style : "cancel"}
-                        ]);
-                }
-                else {
+            .then((response) => {
+                if(response.message != null){
                     Alert.alert("Succès", "Vous avez bien été inséré dans la file d'attente.",
                         [
                             {text: "OK", onPress: () => goBack()}
+                        ]);
+                }
+                else if (response.error != null){
+                    Alert.alert("Echec", response.error,
+                        [
+                            {text: "Retour", style : "cancel"}
                         ]);
                 }
             })
@@ -52,13 +52,15 @@ class WaitingListInsertion extends React.Component {
                 <View style={styles.input_container}>
                     <Text style={styles.text}>{translate("FORM_phone")}</Text>
                     <TextInput style={styles.input} placeholder={translate("PLACEHOLDER_phone")}
-                               onChangeText={(text) => this._customerNumberInputChanged(text)}/>
+                               onChangeText={(text) => this._customerNumberInputChanged(text)}
+                               keyboardType="numeric"/>
                 </View>
                 <View style={styles.input_container}>
                     <Text style={styles.text}>{translate("FORM_secret")}</Text>
                     <TextInput style={styles.input} placeholder={translate("PLACEHOLDER_secret")}
                                onChangeText={(text) => this._secretInputChanged(text)}
-                               secureTextEntry={true}/>
+                               secureTextEntry={true}
+                               keyboardType="numeric"/>
                 </View>
                 <View style={styles.button_container}>
                     <TouchableOpacity onPress={() => {this.insert(this.customerNumber, this.secret, this.props.navigation.getParam("storeId"))}}
